@@ -112,8 +112,6 @@ This technique allows us to layer the application using the [Dependency Injectio
 This makes the business logic independent from other layers.
 
 Next, we start the server and wait for signals in _select_ for graceful completion.
-If `app.go` starts to grow, you can split it into multiple files.
-
 For a large number of injections, [wire](https://github.com/google/wire) can be used.
 
 The `migrate.go` file is used for database auto migrations.
@@ -191,8 +189,6 @@ apiV2Group := app.Group("/v2")
 	v2.NewTranslationRoutes(apiV2Group, t, l)
 }
 ```
-
-Instead of [Fiber](https://github.com/gofiber/fiber), you can use any other http framework.
 
 In `router.go` and above the handler methods, there are comments for generating swagger documentation
 using [swag](https://github.com/swaggo/swag).
@@ -308,7 +304,6 @@ Business logic has an interface for working with an _abstract_ database or _abst
 - All calls to the inner layer are made through the interface (!).
 - Data is transferred in a format that is convenient for business logic (`internal/entity`).
 
-For example, you need to access the database from HTTP (controller).
 Both HTTP and database are in the outer layer, which means they know nothing about each other.
 The communication between them is carried out through `usecase` (business logic):
 
@@ -355,15 +350,6 @@ These can be repositories `internal/usecase/repo`, external webapi `internal/use
 microservices.
 In the template, the _infrastructure_ packages are located inside `internal/usecase`.
 
-You can choose how to call the entry points as you wish. The options are:
-
-- controller (in our case)
-- delivery
-- transport
-- gateways
-- entrypoints
-- primary
-- input
 
 ### Additional layers
 
@@ -376,21 +362,12 @@ to each other (directed inward) and communicate through interfaces.
 
 The inner layer is also divided into two (with separation of interfaces), in the case of complex logic.
 
----
-
-Complex tools can be divided into additional layers.
-However, you should add layers only if really necessary.
 
 ### Alternative approaches
 
 In addition to Clean architecture, _Onion architecture_ and _Hexagonal_ (_Ports and adapters_) are similar to it.
 Both are based on the principle of Dependency Inversion.
 _Ports and adapters_ are very close to _Clean Architecture_, the differences are mainly in terminology.
-
-## Similar projects
-
-- [https://github.com/bxcodec/go-clean-arch](https://github.com/bxcodec/go-clean-arch)
-- [https://github.com/zhashkevych/courses-backend](https://github.com/zhashkevych/courses-backend)
 
 ## Useful links
 
